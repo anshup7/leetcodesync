@@ -4,7 +4,6 @@
  */
 var longestConsecutive = function(nums) {
     if(nums.length === 0) return 0;
-    nums.sort((a,b) => a-b);
     let numsSet = new Set(nums);
     let maxCount = 1;
 
