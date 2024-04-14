@@ -10,20 +10,17 @@ var longestConsecutive = function(nums) {
 
     for(let each of nums) {
         let countOfConsecutiveElements = 1;
-        if(numsSet.has(each-1)) { //1)
-            continue;
-        }
+        if(!numsSet.has(each-1)) { //1)
+            let nextElement = each + 1;
+            while(numsSet.has(nextElement)) {
+                countOfConsecutiveElements++;
+                nextElement += 1;
+            }
 
-        let nextElement = each + 1;
-        while(numsSet.has(nextElement)) {
-            countOfConsecutiveElements++;
-            nextElement += 1;
+            if(countOfConsecutiveElements > maxCount) {
+                maxCount = countOfConsecutiveElements;
+            }
         }
-
-        if(countOfConsecutiveElements > maxCount) {
-            maxCount = countOfConsecutiveElements;
-        }
-
     }
 
     return maxCount;
