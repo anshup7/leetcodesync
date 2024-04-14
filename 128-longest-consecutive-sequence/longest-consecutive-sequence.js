@@ -13,12 +13,12 @@ var longestConsecutive = function(nums) {
 
     for(let each of nums) {
         let countOfConsecutiveElements = 1;
-        if(numsMap.has(each-1)) { //1)
+        if(numsMap.get(each-1)) { //1)
             continue;
         }
 
         let nextElement = each + 1;
-        while(numsMap.has(nextElement)) {
+        while(numsMap.get(nextElement)) {
             countOfConsecutiveElements++;
             nextElement += 1;
         }
