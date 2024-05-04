@@ -13,13 +13,19 @@ var threeSum = function(nums) {
         let k = nums.length - 1;
 
         while(j < k) {
+            let rerun = false
             if(visitedJ == nums[j]) {
                 j++;
-                continue;
+                rerun = true;
             }
 
             if(visitedK == nums[k]) {
                 k--;
+                rerun = true;
+            }
+
+            if(rerun) {
+                rerun = false;
                 continue;
             }
 
