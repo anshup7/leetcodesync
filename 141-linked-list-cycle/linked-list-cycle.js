@@ -11,11 +11,12 @@
  * @return {boolean}
  */
 var hasCycle = function(head) {
-    let fast = head;
+    let slow = head;
+    let fast = head && head.next;
     while(fast && fast.next) {
-        head = head.next;
+        slow = slow.next;
         fast = fast.next.next;
-        if(head === fast) return true; // we are looking on references hence this equality is fine
+        if(slow === fast) return true; // we are looking on references hence this equality is fine
     }
 
     return false;
