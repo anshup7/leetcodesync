@@ -8,7 +8,7 @@ function Node(url) {
  */
 var BrowserHistory = function(homepage) {
     this.head = new Node(homepage);
-    this.currentNode = {...this.head};
+    this.currentNode = this.head;
 };
 
 /** 
