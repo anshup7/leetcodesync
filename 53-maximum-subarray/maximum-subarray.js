@@ -3,17 +3,14 @@
  * @return {number}
  */
 var maxSubArray = function(nums) {
-    if(nums.length === 1) return nums;
-    let maxSum = 0;
     let currentSum = 0;
     let maxNegative = -Infinity;
-    let allNegative = true; // assume that all numbers in the array are negative
-    
-    for(let i=0; i<nums.length; i++) {
-        currentSum += nums[i];
+    let maxSum  = 0;
+    let hasNegativeOnly = nums.filter(val => val >= 0).length > 0 ? false : true;
+    for(let each of nums) {
+        currentSum += each;
 
         if(currentSum < 0) {
-            // set current to zero, reset the subarray here.
             currentSum = 0;
         }
 
@@ -21,17 +18,10 @@ var maxSubArray = function(nums) {
             maxSum = currentSum;
         }
 
-        // handle all negative numbers
-
-        if(nums[i] < 0 && nums[i] > maxNegative) {
-            maxNegative = nums[i];
-        }
-
-        if(nums[i] >= 0) {
-            allNegative = false;
-        }
+        if(each > maxNegative && each < 0) maxNegative = each;
     }
 
-    if(allNegative) return maxNegative;
+    if(hasNegativeOnly) return maxNegative;
+
     return maxSum;
 };
