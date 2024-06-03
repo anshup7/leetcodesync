@@ -6,7 +6,7 @@ var maxSubArray = function(nums) {
     let currentSum = 0;
     let maxNegative = -Infinity;
     let maxSum  = 0;
-    let hasNegativeOnly = nums.filter(val => val >= 0).length > 0 ? false : true;
+    let hasNegativeOnly = true;
     for(let each of nums) {
         currentSum += each;
 
@@ -18,7 +18,11 @@ var maxSubArray = function(nums) {
             maxSum = currentSum;
         }
 
-        if(each > maxNegative && each < 0) maxNegative = each;
+        if(each > maxNegative && each < 0) {
+            maxNegative = each;
+        }
+
+        if(each >= 0) hasNegativeOnly = false;
     }
 
     if(hasNegativeOnly) return maxNegative;
