@@ -8,8 +8,8 @@ class Solution {
             int sum = nums[start] + nums[end];
             nums[start] = sum - nums[start];
             nums[end] = sum - nums[end];
-            start++;
-            end--;
+            start += 1;
+            end -= 1;
         }
 
         // First part reverse
@@ -19,8 +19,8 @@ class Solution {
             int sum = nums[start] + nums[end];
             nums[start] = sum - nums[start];
             nums[end] = sum - nums[end];
-            start++;
-            end--;
+            start += 1;
+            end -= 1;
         }
 
         // Second part reverse
@@ -32,8 +32,8 @@ class Solution {
             int sum = nums[start] + nums[end];
             nums[start] = sum - nums[start];
             nums[end] = sum - nums[end];
-            start++;
-            end--;
+            start += 1;
+            end -= 1;
         }
     }
 }
