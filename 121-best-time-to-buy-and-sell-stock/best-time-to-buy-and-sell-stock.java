@@ -12,9 +12,7 @@ class Solution {
                 minIndex = i;
                 max = min;
                 maxIndex = i;
-            } 
-            
-            if(prices[i] > max) {
+            } else if(prices[i] > max) {
                 max = prices[i];
                 maxIndex = i;
             }
