@@ -8,7 +8,7 @@ class Solution {
                 allowedSteps = nums[i];
             }
 
-            i++;
+            i = i + 1;
         }
 
         return i >= nums.length;
