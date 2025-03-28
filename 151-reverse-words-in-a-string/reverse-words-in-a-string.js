@@ -4,24 +4,29 @@
  */
 var reverseWords = function(s) {
     s = s.trim();
-    let reversed = [];
-    let start = 0;
+    let rev = "";
+    let i = s.length - 1;
+    let added = false;
     let word = "";
-    let space = false;
-    while(start <= (s.length - 1)) {
-        if(s[start] == " ") {
-            if(word) word = ` ${word}`;
-            if(word) {
-                reversed.unshift(word);
+    while(i >= 0) {
+        if(s[i] === " ") {
+            if(!added) {
+                rev += word;
+                rev += " ";
                 word = "";
+                added = true;
             }
-            start++;
-            continue;
+        } else {
+            word = `${s[i]}${word}`;
+            added = false;
         }
-        
-        word += s[start];
-        start++;
+
+        i--;
     }
-    if(word) reversed.unshift(word);
-    return reversed.join("");
+
+    if(!added && word.length > 0) {
+        rev += word;
+    }
+
+    return rev;
 };
