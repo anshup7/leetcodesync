@@ -2,31 +2,25 @@
  * @param {string} s
  * @return {boolean}
  */
-
 var isPalindrome = function(s) {
-    s = s.replaceAll(" ", "").toLowerCase();
-    let newS = "";
-    for(let i=0; i<s.length; i++) {
-        if(s.charCodeAt(i) >= 48 && s.charCodeAt(i) <= 57) {
-            newS += s[i];
-        } else if(s.charCodeAt(i) >= 97 && s.charCodeAt(i) <= 122) {
-            newS += s[i];
+    const lower = s.toLowerCase();
+    let cleanedStr = "";
+    let i = 0;
+    while( i < s.length ) {
+        const code = lower.charCodeAt(i);
+        if((code >= 48 && code <= 57) || (code >= 97 && code <= 122)) {
+            cleanedStr += lower[i];
         }
+        i++;
     }
-    s = newS;
 
-    let ar = s.split("");
-    reverse(0, ar.length - 1);
-    return ar.join("") == s;
-
-    function reverse(i, j) {
-        if(j<i) return;
-
-        temp = ar[i];
-        ar[i] = ar[j];
-        ar[j] = temp;
+    i = 0;
+    let j = cleanedStr.length - 1;
+    while(i < j) {
+        if(cleanedStr[i] != cleanedStr[j]) return false;
         i++;
         j--;
-        reverse(i,j);
     }
+
+    return true;
 };
