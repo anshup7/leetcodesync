@@ -12,11 +12,16 @@ var lengthOfLongestSubstring = function(s) {
     let maxLen = 0;
     while(end < s.length) {
         seen.set(s[end], (seen.get(s[end]) || 0) + 1);
-        while(seen.get(s[end]) > 1) {
+        while(seen.get(s[end]) > 1) { // I have got more than 1 count because of a single character
+            // Since we are concerned with substrings(and not subsequence of strings)
+            // Until this repetition is removed, all the substrings including duplicate are not 
+            // relevant.
             seen.set(s[start], seen.get(s[start]) - 1);
             start++;
         }
 
+        // We are calculating the substring lengths only when the substring is not containing 
+        // any duplicates.
         const currentLen = ( end - start ) + 1;
         if(currentLen > maxLen) {
             maxLen = currentLen;
