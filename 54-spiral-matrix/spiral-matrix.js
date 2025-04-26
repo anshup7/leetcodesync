@@ -3,76 +3,60 @@
  * @return {number[]}
  */
 var spiralOrder = function(matrix) {
-    let top = 0;
-    let bottom = matrix.length - 1;
-    let right = matrix[0].length - 1;
-    let left = 0;
-    let direction = "right"; // "down", "left", "top"
-    let output = [];
-    let visited = [];
-    for(let row = 0; row < matrix.length; row++) {
-        visited.push(Array(matrix[row].length).fill(false));
-    }
-    while((left <= right) && (top <= bottom)) {
-        let continuePass = true;
-        while(continuePass) {
-            if(direction == "right") {
-                const by = 1;
-                let counter = top;
-                while(counter <= right) {
-                    if(!visited[top][counter]) {
-                        output.push(matrix[top][counter]);
-                        visited[top][counter] = true;
-                    }
-                    counter += by;
-                }
-                direction = "down";
-            } 
-            if (direction == "down") {
-                const by = 1;
-                let counter = top;
-                while(counter <= bottom) {
-                    if(!visited[counter][right]) {
-                     output.push(matrix[counter][right]);
-                     visited[counter][right] = true;
-                    }
-                    counter += by;
-                }
-                direction = "left";
-            } 
-            if(direction == "left") {
-                const by = -1;
-                let counter = right;
-                while(counter >= left) {
-                    if(!visited[bottom][counter]) {
-                        output.push(matrix[bottom][counter]);
-                        visited[bottom][counter] = true;
-                    }
-                    counter += by;
-                }
-                direction = "top";
-            } 
-            if(direction == "top") {
-                const by = -1;
-                let counter = bottom;
-                while(counter >= top) {
-                    if(!visited[counter][left]) {
-                        output.push(matrix[counter][left]);
-                        visited[counter][left] = true;
-                    }
-                    counter += by;
-                }
-                direction = "right";
-                continuePass = false;
+    let movementDirection = "right";
+    // Possible directions that can be moved - "right", "down", "left", "up"
+    let spiralValues = [];
+    let row = 0;
+    let column = -1;
+    let boundedLeftColumn = 0;
+    let boundedRightColumn = matrix[0].length - 1;
+    let boundedTopRow = 0;
+    let boundedBottomRow = matrix.length - 1;
+    while(boundedTopRow <= boundedBottomRow && boundedLeftColumn <= boundedRightColumn) {
+        if(movementDirection === "right") {
+            for(column = boundedLeftColumn; column <= boundedRightColumn; column++) {
+                spiralValues.push(matrix[boundedTopRow][column])
             }
+            boundedTopRow++;
+            // column--;
+            movementDirection = "down";
+        } else if(movementDirection === "down") {
+            for(row = boundedTopRow; row <= boundedBottomRow; row++) {
+                spiralValues.push(matrix[row][boundedRightColumn])
+            }
+            boundedRightColumn--;
+            // row--;
+            movementDirection = "left";
+        } else if(movementDirection === "left") {
+            for(column = boundedRightColumn; column >= boundedLeftColumn; column--) {
+                spiralValues.push(matrix[boundedBottomRow][column])
+            }
+            boundedBottomRow--;
+            // column++;
+            movementDirection = "up";
+        } else if(movementDirection === "up") {
+            for(row = boundedBottomRow; row >= boundedTopRow; row--) {
+                spiralValues.push(matrix[row][boundedLeftColumn])
+            }
+            boundedLeftColumn++;
+            movementDirection = "right";
         }
-        left += 1;
-        right -= 1;
-        bottom -= 1;
-        top += 1;
+
     }
-
-    
-
-    return output;
+        return spiralValues;
+    /*
+    * One Iteration ------------------
+    * if moving right - column will increase(till bounded right column) and row constant.
+    * if moving down - row will increase(till bounded row bottom) and column constant.
+    * if moving left - column will decrease(till bounded left column) and row constant.
+    * if moving up - row will decrease(till bounded row top) and column constant
+    * --------------------------------
+    * Decrease bounded right column by 1
+    * Decrease bounded row bottom by 1
+    * Increase bounded column left by 1
+    * Increase bounded row top by 1
+    * Second Iteration -----------------------------------
+    * Repeat as in First Iteration
+    ** The loop should go on till boundedRowTop <= boundedRowBottom (Columns will be also taken care with this condition, what I can see as of now.) 
+     */
 };
