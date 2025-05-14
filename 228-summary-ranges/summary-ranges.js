@@ -9,7 +9,7 @@ var summaryRanges = function(nums) {
         The last element where the difference of 1 deviates, becomes the end of the range
      */
     if(nums.length === 0) return nums;
-    
+
     let ranges = [];
     let startNum = nums[0];
     let prev;
