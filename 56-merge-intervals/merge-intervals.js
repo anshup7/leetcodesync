@@ -3,30 +3,38 @@
  * @return {number[][]}
  */
 var merge = function(intervals) {
-    // sort the intervals with the start of the range
-    intervals.sort((a,b) => a[0] - b[0]);
-    let n = intervals.length;
-    let i = 0;
-    let j = i+1;
-    let newIntervals = [];
-    while((i<j) && (j < intervals.length)) {
-        if((intervals[j][0] <= intervals[i][1]) 
-        && (intervals[i][1] >= intervals[j][1])) {
-            intervals[j] = [intervals[i][0], intervals[i][1]];
-            intervals.splice(i, 1);
-        } else if(
-            (intervals[j][0] <= intervals[i][1]) &&
-            (intervals[j][1] >= intervals[i][1])
-        ) {
-            intervals[j] = [intervals[i][0], intervals[j][1]];
-            intervals.splice(i, 1);
-        } else {
-            i = i+1;
-            j = j+1;
-        }
+    // Sort the intervals
 
-        
+    intervals.sort((array1, array2) => {
+        if(array1[0] < array2[0]) {
+            return -1;
+        } else if (array1[0] > array2[0]) {
+            return 1;
+        } else {
+            if(array1[1] <= array2[1]) {
+                return -1;
+            } else if(array1[1] > array2[1]) {
+                return 1
+            }
+        }
+    });
+
+    let ref = intervals[0];
+    let result = [];
+    for(let i = 1; i < intervals.length; i++) {
+        if(ref[1] >= intervals[i][0]) {
+            if(ref[1] < intervals[i][1]) ref[1] = intervals[i][1];
+        } else {
+            result.push(ref);
+            ref = intervals[i];
+        }
     }
 
-    return intervals;
+    // if(ref[0] !== result[result.length - 1][0]) {
+    //     result.push(ref);
+    // }
+
+    result.push(ref);
+
+    return result;
 };
