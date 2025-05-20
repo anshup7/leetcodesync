@@ -37,13 +37,13 @@ var mergeTwoLists = function(list1, list2) {
     }
 
     let leftOver = list1 || list2;
-
-    while(leftOver) {
-        const node = new ListNode(leftOver.val);
-        if(prev) prev.next = node;
-        prev = node;
-        leftOver = leftOver.next;
-    }
+    prev.next = leftOver;
+    // while(leftOver) {
+    //     const node = new ListNode(leftOver.val);
+    //     if(prev) prev.next = node;
+    //     prev = node;
+    //     leftOver = leftOver.next;
+    // }
 
     return newListHead;
 };
