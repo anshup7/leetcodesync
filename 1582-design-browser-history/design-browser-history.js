@@ -1,14 +1,16 @@
-function Node(url) {
-    this.value = url;
-    this.next = null;
-    this.back = null;
-}
 /**
  * @param {string} homepage
  */
+
+function Node(val, prev, next) {
+    this.val = val;
+    this.next = (next == undefined) ? null : next;
+    this.prev = (prev == undefined) ? null : prev;
+}
+
 var BrowserHistory = function(homepage) {
-    this.head = new Node(homepage);
-    this.currentNode = this.head;
+    this.home = new Node(homepage);
+    this.currentPage = this.home;
 };
 
 /** 
@@ -16,10 +18,8 @@ var BrowserHistory = function(homepage) {
  * @return {void}
  */
 BrowserHistory.prototype.visit = function(url) {
-    const node = new Node(url);
-    node.back = this.currentNode;
-    this.currentNode.next = node;
-    this.currentNode = node;
+    this.currentPage.next = new Node(url, this.currentPage); // Clears up all forward history if any were there
+    this.currentPage = this.currentPage.next;
 };
 
 /** 
@@ -27,11 +27,12 @@ BrowserHistory.prototype.visit = function(url) {
  * @return {string}
  */
 BrowserHistory.prototype.back = function(steps) {
-    while(this.currentNode && this.currentNode.back && steps > 0) {
-        this.currentNode = this.currentNode.back;
+    while(steps > 0 && this.currentPage.prev != null) {
+        this.currentPage = this.currentPage.prev;
         steps--;
     }
-    return this.currentNode.value;
+
+    return this.currentPage.val;
 };
 
 /** 
@@ -39,15 +40,12 @@ BrowserHistory.prototype.back = function(steps) {
  * @return {string}
  */
 BrowserHistory.prototype.forward = function(steps) {
-    let currentStep = 1;
-    while(this.currentNode && this.currentNode.next && currentStep <= steps) {
-        this.currentNode = this.currentNode.next;
-        currentStep++;
+    while(steps > 0 && this.currentPage.next != null) {
+        this.currentPage = this.currentPage.next;
+        steps--;
     }
-    return this.currentNode.value;
+    return this.currentPage.val;
 };
-
-
 
 /** 
  * Your BrowserHistory object will be instantiated and called as such:
