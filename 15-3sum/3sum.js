@@ -9,6 +9,10 @@ var threeSum = function(nums) {
     nums.sort((a,b) => a - b);
     let result = [];
     while(startPointer <= nums.length - 3) {
+        if(startPointer > 0 && (nums[startPointer] === nums[startPointer - 1])) {
+            startPointer++;
+            continue;
+        }
         let start = startPointer + 1;
         let end = nums.length - 1;
         while(start < end) {
