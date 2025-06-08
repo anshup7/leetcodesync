@@ -3,35 +3,32 @@
  * @return {number[][]}
  */
 var threeSum = function(nums) {
-    let output = new Map();
+    let tripletMap = new Map();
+    let startPointer = 0;
+    if(nums.length < 3) return nums;
     nums.sort((a,b) => a - b);
-    for(let i=0; i<nums.length; i++) {
-        let j = i+1;
-        let k = nums.length - 1;
-        let visitedJ = null;
-        let visitedK = null;
-        while(j < k) {
-            if((nums[j] === visitedJ) || (nums[k] === visitedK)) {
-                nums[j] === visitedJ ? j++ : k--;
-                continue;
-            }
+    let result = [];
+    while(startPointer <= nums.length - 3) {
+        let start = startPointer + 1;
+        let end = nums.length - 1;
+        while(start < end) {
+            const sum = nums[startPointer] + nums[start] + nums[end];
 
-            const sum = nums[i] + nums[j] + nums[k];
-
-            if(sum === 0) {
-                visitedJ = nums[j];
-                visitedK = nums[k];
-                output.set(`${nums[i]}|${nums[j]}|${nums[k]}`, [nums[i], nums[j], nums[k]]);
-                j++;
-                k--;
-            } else if(sum < 0) {
-                j++;
+            if(sum < 0) {
+                start++;
             } else if(sum > 0) {
-                k--;
+                end--;
+            } else {
+                const joined = `${nums[startPointer]},${nums[start]},${nums[end]}`;
+                if(!tripletMap.has(joined)) {
+                    result.push([nums[startPointer], nums[start], nums[end]]);
+                    tripletMap.set(joined, true);
+                }
+                start++;
             }
         }
+        startPointer++;
     }
 
-    const values = Array.from(output.values());
-    return [...values];
+    return result;
 };
