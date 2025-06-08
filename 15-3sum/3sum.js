@@ -25,6 +25,7 @@ var threeSum = function(nums) {
                     tripletMap.set(joined, true);
                 }
                 start++;
+                end--;
             }
         }
         startPointer++;
